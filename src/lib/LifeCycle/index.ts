@@ -78,6 +78,7 @@ export default class LifeCycle<Props extends {} = Record<string, unknown>> {
     plugins.forEach((plugin) => plugin.apply(this));
   }
 
+  // run Hook
   public run = (): Promise<unknown> => {
     const runHook = new Hook();
     runHook.tap([this.generateModule, this.formatAliasTagTypes, this.defineCustomElement]);
@@ -100,6 +101,7 @@ export default class LifeCycle<Props extends {} = Record<string, unknown>> {
     return this.hooks.alterHTMLTags.call(this) as Promise<LifeCycle<Props>>;
   };
 
+  // wrapper 包装
   private buildFragment = (): IBuildFragmentOutput => {
     const { options } = this;
     const renderHtmlTags = (options.htmlTags || []).concat(
@@ -124,6 +126,7 @@ export default class LifeCycle<Props extends {} = Record<string, unknown>> {
     return this.hooks.beforeElementDefinition.call(this).then(this.componentBuilder);
   };
 
+  // 挂载 dom 到 shadowDom
   private generateCustomElement = () => {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const { options, module, buildFragment } = this;
@@ -159,6 +162,7 @@ export default class LifeCycle<Props extends {} = Record<string, unknown>> {
         const oldAttributesObj = {
           ...this.attributesObj,
         };
+        // heap getPropsValue
         const propsValue = heap.getPropsValue<Props>(attributeName, newValue, options.propTypes);
         const prevValue = this.attributesObj[attributeName];
         this.attributesObj[attributeName] = propsValue;

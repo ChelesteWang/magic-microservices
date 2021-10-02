@@ -13,10 +13,12 @@ export class Hook<T, K> {
     this.tasks = [];
   }
 
+  // 注册
   tap = (tasks: HookCallback<T, K> | HookCallback<T, K>[]): void => {
     tasks instanceof Array ? this.tasks.push(...tasks) : this.tasks.push(tasks);
   };
 
+  // 调用
   call = (args?: T): Promise<T | K | void> => {
     return this.tasks.reduce((preReturn, task) => {
       return preReturn.then((data) => task(args, data));

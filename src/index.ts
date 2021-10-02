@@ -53,9 +53,12 @@ export interface MagicOptions<Props extends {} = Record<string, unknown>> extend
 
 function magic<Props extends {} = Record<string, unknown>>(
   name: string,
+  // module : ModuleType<Props>,
   module: ModuleType<Props>,
+  // options : MagicOptions<Props>
   options: MagicOptions<Props> = {},
 ): Promise<unknown> {
+  // lifeCycle
   const lifeCycle = new LifeCycle({ name, module, options });
   return lifeCycle.run();
 }
